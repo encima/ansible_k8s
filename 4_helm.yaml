@@ -1,0 +1,16 @@
+- hosts: master
+  become: no
+  gather_facts: false
+  tasks:
+    - name: copy tiller config
+      copy:
+        src: /mnt/c/Users/encim/dev/tools/kube-cluster/conf/helm-user.yaml
+        dest: /home/ubuntu/helm-user.yaml
+        remote_src: no
+        owner: ubuntu
+    - name: set up tiller user
+      shell: kubectl apply -f /home/ubuntu/helm-user.yaml
+    - name: get helm
+      shell: curl -L https://git.io/get_helm.sh | bash
+    - name: set up helm
+      shell: helm init --service-account tiller --history-max 200
