@@ -1,0 +1,8 @@
+- hosts: all
+  become: no
+  gather_facts: false
+  tasks:
+    - name: Remove kubeadm
+      shell: kubeadm reset
+    - name: Delete dirs
+      shell: rm -rf /etc/kubernetes && rm -rf ~/.kube

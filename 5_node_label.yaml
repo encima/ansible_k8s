@@ -1,0 +1,14 @@
+- hosts: master
+  become: no
+  gather_facts: false
+  tasks:
+    - name: untaint main node
+      shell: kubectl taint nodes --all node-role.kubernetes.io/master-
+    - name: label main node
+      shell: kubectl label nodes ${HOSTNAME} type=manager
+- hosts: workers
+  become: no
+  gather_facts: false
+  tasks:
+    - name: label worker nodes
+      shell: kubectl label nodes ${HOSTNAME} type=wprker
