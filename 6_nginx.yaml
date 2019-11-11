@@ -6,12 +6,16 @@
       copy:
         src: ~/dev/tools/ansible_k8s/conf/nginx-ingress-values.yaml
         dest: ~/nginx-ingress-values.yaml
+    - name: set up nginx ingress
+      shell: helm install --name nginx-ingress --namespace nginx-ingress stable/nginx-ingress -f ~/nginx-ingress-values.yaml
+- hosts: master
+  become: no
+  gather_facts: false
+  tasks:
     - name: copy helm values
       copy:
         src: ~/dev/tools/ansible_k8s/conf/cert-manager-values.yaml
         dest: ~/cert-manager-values.yaml
-    - name: set up nginx ingress
-      shell: helm install --name nginx-ingress --namespace nginx-ingress stable/nginx-ingress -f ~/nginx-ingress-values.yaml
     - name: add cert man namespace
       shell: kubectl create namespace cert-manager
     - name: add crds
@@ -20,6 +24,10 @@
       shell: helm repo add jetstack https://charts.jetstack.io && helm repo update
     - name: install cert-manager
       shell: helm install --name cert-manager --namespace cert-manager --version v0.11.0 -f ~/cert-manager-values.yaml jetstack/cert-manager
+- hosts: master
+  become: no
+  gather_facts: false
+  tasks:
     - name: copy cluster-issuer
       copy:
         src: ~/tools/kube-cluster/conf/cluster-issuer.yaml

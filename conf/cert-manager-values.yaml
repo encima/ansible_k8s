@@ -91,12 +91,11 @@ podDnsConfig:
     - "1.1.1.1"
     - "8.8.8.8"
 
-nodeSelector:
-  type: manager
+nodeSelector: {}
 
-ingressShim:
-  defaultIssuerName: "letsencrypt-c3s-prod"
-  defaultIssuerKind: "ClusterIssuer"
+ingressShim: {}
+  # defaultIssuerName: ""
+  # defaultIssuerKind: ""
   # defaultIssuerGroup: ""
 
 prometheus:
