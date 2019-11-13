@@ -16,3 +16,14 @@
       args:
         chdir: $HOME
         creates: node_joined.txt
+    - name: copy kubelet DNS resolv conf
+      src: conf/10-kubeadm.conf
+      dest: /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+      owner: root
+    - name: stop kubelet
+      shell: service kubelet stop
+    - name: reload systemd
+      shell: systemctl daemon-reload
+    - name: restart kubelet
+      shell: service kubelet start
+

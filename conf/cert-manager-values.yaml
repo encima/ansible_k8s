@@ -93,9 +93,9 @@ podDnsConfig:
 
 nodeSelector: {}
 
-ingressShim: {}
-  # defaultIssuerName: ""
-  # defaultIssuerKind: ""
+ingressShim:
+  defaultIssuerName: "letsencrypt-c3s-prod"
+  defaultIssuerKind: "ClusterIssuer"
   # defaultIssuerGroup: ""
 
 prometheus:
